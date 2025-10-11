@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinoca - Automação e Estratégia de Crescimento B2B</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <style>
+        /* Estilo base para usar a fonte Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8; /* Tom castanho meio branco */
+            color: #402E32; /* Tom de castanho escuro para o texto */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Cores personalizadas para o Tailwind */
+        .bg-brand-soft { background-color: #FDFBF8; }
+        .bg-brand-base { background-color: #EFEAE4; }
+        .bg-brand-dark { background-color: #59443B; }
+        .text-brand-dark { color: #402E32; }
+        .text-brand-accent { color: #8C6D5F; }
+        .border-brand-base { border-color: #DCD2C9; }
+        .btn-primary {
+            background-color: #59443B;
+            color: #FFFFFF;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #402E32;
+            transform: translateY(-2px);
+        }
+
+        /* Efeito de sombra sutil */
+        .subtle-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Animação suave para scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .section-icon {
+            font-size: 48px;
+            color: #8C6D5F;
+        }
+    </style>
+</head>
+<body class="bg-brand-soft text-brand-dark">
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-brand-soft/80 backdrop-blur-lg z-50 border-b border-brand-base">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-brand-dark">jinoca.</a>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#services" class="hover:text-brand-accent transition-colors">Serviços</a>
+                <a href="#why-us" class="hover:text-brand-accent transition-colors">Diferenciais</a>
+                <a href="#automation" class="hover:text-brand-accent transition-colors">Automações</a>
+                <a href="#projects" class="hover:text-brand-accent transition-colors">Projetos</a>
+                <a href="#process" class="hover:text-brand-accent transition-colors">Processo</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden ml-auto">
+                <span class="material-icons-outlined text-3xl">menu</span>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#services" class="block py-2 hover:text-brand-accent transition-colors">Serviços</a>
+             <a href="#why-us" class="block py-2 hover:text-brand-accent transition-colors">Diferenciais</a>
+             <a href="#automation" class="block py-2 hover:text-brand-accent transition-colors">Automações</a>
+             <a href="#projects" class="block py-2 hover:text-brand-accent transition-colors">Projetos</a>
+             <a href="#process" class="block py-2 hover:text-brand-accent transition-colors">Processo</a>
+             <a href="https://wa.me/863018405" target="_blank" class="mt-4 btn-primary w-full text-center px-5 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                <span>Entrar em Contato</span>
+             </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section id="hero" class="text-center py-20 md:py-32">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-brand-dark leading-tight">
+                Construímos sua Máquina<br>de <span class="text-brand-accent">Crescimento Inteligente</span>.
+            </h2>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-brand-dark/80">
+                Chega de processos manuais, leads desqualificados e crescimento imprevisível. Unimos estratégia, dados e tecnologia para criar sistemas que geram oportunidades de negócio B2B de forma consistente e automática.
+            </p>
+            <a href="https://wa.me/863018405" target="_blank" class="mt-10 inline-flex items-center space-x-3 btn-primary px-8 py-4 rounded-lg font-bold text-lg">
+                <span>Agendar Diagnóstico Gratuito</span>
+                <span class="material-icons-outlined">whatsapp</span>
+            </a>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-16 md:py-24 border-t border-brand-base">
+            <div class="text-center mb-16">
+                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">NOSSAS SOLUÇÕES</h3>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Uma abordagem completa para aquisição de clientes</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
+                    <span class="material-icons-outlined text-4xl text-brand-accent">filter_alt</span>
+                    <h4 class="text-xl font-bold mt-4 mb-2">Estruturação de Funil</h4>
+                    <p class="text-brand-dark/80">Mapeamos e construímos a jornada ideal do seu cliente, desde o primeiro contato até o fechamento. Criamos funis de marketing e vendas que guiam o lead de forma lógica, aumentando drasticamente as taxas de conversão.</p>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
+                    <span class="material-icons-outlined text-4xl text-brand-accent">groups</span>
+                    <h4 class="text-xl font-bold mt-4 mb-2">Geração de Leads B2B</h4>
+                    <p class="text-brand-dark/80">Vamos além do óbvio. Usamos prospecção ativa, enriquecimento de dados e qualificação precisa para encontrar e engajar decisores em suas contas-alvo, entregando oportunidades reais para sua equipe de vendas.</p>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
+                    <span class="material-icons-outlined text-4xl text-brand-accent">web</span>
+                    <h4 class="text-xl font-bold mt-4 mb-2">Landing Pages & Web Apps</h4>
+                    <p class="text-brand-dark/80">Desenvolvemos páginas focadas em uma única ação: a conversão. Além disso, criamos pequenos Web Apps (calculadoras, diagnósticos) que servem como iscas de leads de altíssimo valor para o seu negócio.</p>
+                </div>
+                <!-- Service Card 4 -->
+                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
+                    <span class="material-icons-outlined text-4xl text-brand-accent">bolt</span>
+                    <h4 class="text-xl font-bold mt-4 mb-2">Automações Inteligentes</h4>
+                    <p class="text-brand-dark/80">Identificamos tarefas repetitivas em seus processos de marketing e vendas e as automatizamos. Da nutrição de leads à atualização do CRM, liberamos seu tempo para o que realmente importa: estratégia e relacionamento.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Us Section -->
+        <section id="why-us" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">NOSSOS DIFERENCIAIS</h3>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Por que somos a escolha certa para o seu negócio?</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="flex items-start space-x-6">
+                    <span class="material-icons-outlined section-icon mt-1">insights</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Foco Obsessivo em ROI</h4>
+                        <p class="text-brand-dark/80">Não estamos aqui para entregar tarefas, estamos aqui para gerar retorno sobre o investimento. Cada ação, ferramenta e estratégia é planejada com um objetivo claro: impactar positivamente seu faturamento. Medimos tudo e otimizamos sem parar.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-6">
+                    <span class="material-icons-outlined section-icon mt-1">model_training</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Visão Holística de Crescimento</h4>
+                        <p class="text-brand-dark/80">Entendemos que marketing e vendas não são ilhas. Nossa abordagem integra as duas áreas, garantindo que os leads gerados pelo marketing sejam de alta qualidade e que a equipe de vendas tenha o contexto e as ferramentas para convertê-los eficientemente.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-6">
+                    <span class="material-icons-outlined section-icon mt-1">hub</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Expertise em Tecnologia e Processos</h4>
+                        <p class="text-brand-dark/80">Somos fluentes na linguagem das ferramentas que impulsionam o crescimento (CRMs, automação de marketing, plataformas de prospecção). Não apenas recomendamos, mas implementamos, integramos e garantimos que a tecnologia trabalhe a seu favor.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-6">
+                    <span class="material-icons-outlined section-icon mt-1">handshake</span>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Parceria, Não Apenas Prestação</h4>
+                        <p class="text-brand-dark/80">Atuamos como uma extensão da sua equipe. Nos envolvemos profundamente para entender as nuances do seu mercado e seus clientes. Sua meta se torna a nossa meta, e trabalhamos com transparência e comunicação constante para alcançá-la.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Automation Section -->
+        <section id="automation" class="py-16 md:py-24 bg-brand-base -mx-6 px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-4">
+                    <span class="material-icons-outlined text-5xl text-brand-accent">auto_awesome</span>
+                    <h2 class="text-3xl md:text-4xl font-bold">O que são Automações, na prática?</h2>
+                    <p class="text-brand-dark/80 leading-relaxed">
+                        Imagine ter um funcionário incansável, que trabalha 24/7, nunca comete erros e executa tarefas operacionais com perfeição. Isso é a automação. É o uso da tecnologia para realizar ações pré-definidas com base em gatilhos e regras, sem intervenção humana.
+                    </p>
+                    <p class="text-brand-dark/80 leading-relaxed">
+                        O objetivo não é substituir pessoas, mas sim libertá-las de tarefas repetitivas e de baixo valor, permitindo que foquem em estratégia, criatividade e relacionamento com o cliente.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl subtle-shadow border border-brand-base">
+                    <h4 class="font-bold text-lg mb-4">Exemplos de automações que implementamos:</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">mark_email_read</span><span><strong>Nutrição de Leads:</strong> Envio de sequências de e-mails educativos para novos leads, aquecendo-os para a compra.</span></li>
+                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">grade</span><span><strong>Lead Scoring:</strong> Pontuar leads com base em seu perfil e ações (visitou a página de preço, baixou um material) para identificar os mais quentes.</span></li>
+                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">move_up</span><span><strong>Atualização de CRM:</strong> Mover um lead de etapa no funil de vendas automaticamente quando ele realiza uma ação específica.</span></li>
+                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">task_alt</span><span><strong>Qualificação de Leads:</strong> Enviar uma notificação para o vendedor apenas quando o lead atinge uma pontuação mínima ou solicita contato.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">ESTUDOS DE CASO</h3>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Nossa abordagem na prática</h2>
+            </div>
+            <div class="space-y-20">
+                <!-- Project 1 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-4">
+                        <h4 class="text-2xl font-bold">Nexus Tech - Estrutura de Prospecção B2B</h4>
+                        <p class="text-brand-dark/80"><strong>Desafio:</strong> A Nexus Tech, uma empresa de software, dependia de indicações e tinha um processo de prospecção manual, lento e de baixo volume.</p>
+                        <p class="text-brand-dark/80"><strong>Solução:</strong> Implementamos um sistema de prospecção outbound semi-automatizado. Utilizamos o Apollo.io para construir listas de decisores em empresas-alvo e o Instantly para disparar sequências de e-mails personalizadas. Os vendedores eram acionados apenas quando um lead demonstrava interesse.</p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Apollo.io</span>
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Instantly.ai</span>
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Prospecção B2B</span>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400/EFEAE4/59443B?text=Dashboard+de+Prospec%C3%A7%C3%A3o" alt="Dashboard de Prospecção" class="rounded-xl subtle-shadow w-full h-auto object-cover">
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                         <img src="https://placehold.co/600x400/EFEAE4/59443B?text=Fluxo+de+Automa%C3%A7%C3%A3o" alt="Fluxo de Automação de Marketing" class="rounded-xl subtle-shadow w-full h-auto object-cover">
+                    </div>
+                    <div class="space-y-4 order-1 lg:order-2">
+                        <h4 class="text-2xl font-bold">Inova Hub - Automação da Jornada do Cliente</h4>
+                        <p class="text-brand-dark/80"><strong>Desafio:</strong> A consultoria Inova Hub gerava muitos leads através de webinars, mas perdia a maioria por falta de um acompanhamento (follow-up) estruturado.</p>
+                        <p class="text-brand-dark/80"><strong>Solução:</strong> Desenhamos e implementamos uma jornada de nutrição completa no RD Station. Após o webinar, os leads entravam em um fluxo automático que entregava conteúdos complementares, os qualificava com lead scoring e os direcionava para a equipe de vendas no momento certo.</p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">RD Station</span>
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Automação de Marketing</span>
+                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Nutrição de Leads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="py-16 md:py-24">
+             <div class="text-center mb-16">
+                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">COMO TRABALHAMOS</h3>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Nossa metodologia para construir seu sucesso</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-xl border border-brand-base">
+                    <span class="material-icons-outlined section-icon mb-4">biotech</span>
+                    <h3 class="text-xl font-bold mb-2">1. Diagnóstico e Estratégia</h3>
+                    <p class="text-brand-dark/80">Realizamos uma imersão profunda no seu negócio, analisando processos, concorrência e o perfil do seu cliente ideal. O resultado é um plano de ação detalhado, com KPIs claros e um mapa da jornada do cliente a ser construída.</p>
+                </div>
+                 <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-xl border border-brand-base">
+                    <span class="material-icons-outlined section-icon mb-4">construction</span>
+                    <h3 class="text-xl font-bold mb-2">2. Implementação e Tecnologia</h3>
+                    <p class="text-brand-dark/80">É hora de construir. Configuramos as ferramentas, criamos os ativos (e-mails, landing pages), desenvolvemos os fluxos de automação e integramos os sistemas para que tudo funcione de forma coesa e eficiente, com testes rigorosos.</p>
+                </div>
+                 <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-xl border border-brand-base">
+                    <span class="material-icons-outlined section-icon mb-4">trending_up</span>
+                    <h3 class="text-xl font-bold mb-2">3. Otimização Contínua</h3>
+                    <p class="text-brand-dark/80">Nosso trabalho não termina no lançamento. Monitoramos os dados constantemente, geramos relatórios de performance e propomos otimizações (testes A/B, ajustes de fluxo) para garantir que sua máquina de crescimento esteja sempre melhorando.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white">
+        <div class="container mx-auto px-6 py-20 text-center">
+             <h2 class="text-3xl md:text-4xl font-bold">Pronto para parar de perder oportunidades?</h2>
+             <p class="mt-4 max-w-xl mx-auto text-white/80">Vamos conversar sobre os gargalos do seu processo comercial e desenhar um plano para automatizar seu crescimento. Sem compromisso.</p>
+             <a href="https://wa.me/863018405" target="_blank" class="mt-8 inline-flex items-center space-x-3 bg-white text-brand-dark px-8 py-4 rounded-lg font-bold text-lg transition-transform hover:scale-105">
+                <span>Fale com um especialista agora</span>
+                <span class="material-icons-outlined">whatsapp</span>
+            </a>
+            <div class="mt-16 border-t border-white/20 pt-8">
+                <p class="text-white/70">&copy; 2024 jinoca. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lógica para o menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Fechar o menu ao clicar em um link
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                 mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+
