@@ -1,312 +1,536 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jinoca - Automação e Estratégia de Crescimento B2B</title>
+    <title>Plataforma de Gestão B2B - Otimize Seus Resultados</title>
+    <meta name="description" content="Centralize tarefas, automatize processos e entregue resultados com mais eficiência. Solicite uma demonstração da nossa plataforma de gestão B2B.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Google Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
-        /* Estilo base para usar a fonte Inter */
+        /* Estilos personalizados e configuração do Tailwind */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8; /* Tom castanho meio branco */
-            color: #402E32; /* Tom de castanho escuro para o texto */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8fafc; /* cinza claro */
+            color: #1e293b; /* cinza escuro */
         }
-
-        /* Cores personalizadas para o Tailwind */
-        .bg-brand-soft { background-color: #FDFBF8; }
-        .bg-brand-base { background-color: #EFEAE4; }
-        .bg-brand-dark { background-color: #59443B; }
-        .text-brand-dark { color: #402E32; }
-        .text-brand-accent { color: #8C6D5F; }
-        .border-brand-base { border-color: #DCD2C9; }
-        .btn-primary {
-            background-color: #59443B;
-            color: #FFFFFF;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .btn-primary:hover {
-            background-color: #402E32;
-            transform: translateY(-2px);
-        }
-
-        /* Efeito de sombra sutil */
-        .subtle-shadow {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        .hero-bg {
+            background-color: #0f172a; /* azul-marinho/quase preto */
         }
         
-        /* Animação suave para scroll */
-        html {
-            scroll-behavior: smooth;
+        /* ===== Estilos do Formulário Multi-Passo ===== */
+        .form-container {
+            position: relative;
+            /* Altura adaptável para evitar pulos de layout */
+            min-height: 500px; 
+        }
+        @media (min-width: 768px) {
+            .form-container {
+                min-height: 520px;
+            }
+        }
+
+
+        .form-step {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(30px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, visibility 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .form-step.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .form-step.exiting {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-30px);
+        }
+
+        .form-input {
+            transition: all 0.3s ease;
+            appearance: none;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+        }
+        .input-error {
+            border-color: #ef4444 !important;
         }
         
-        .section-icon {
-            font-size: 48px;
-            color: #8C6D5F;
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+
+        /* ===== Estilos do Seletor Personalizado ===== */
+        .custom-select-wrapper {
+            position: relative;
+        }
+        .custom-select {
+            cursor: pointer;
+        }
+        .custom-select-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-select-trigger .arrow {
+            transition: transform 0.3s ease;
+        }
+        .custom-options {
+            position: absolute;
+            /* Abre para cima para não ser cortado em ecrãs pequenos */
+            bottom: calc(100% + 8px); 
+            left: 0;
+            right: 0;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .custom-select-wrapper.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .custom-select-wrapper.open .arrow {
+             transform: rotate(180deg);
+        }
+        .custom-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .custom-option:hover, .custom-option.selected {
+            background-color: #334155;
+        }
+
+        /* Animação de Carregamento e Sucesso */
+        .loader {
+            border: 4px solid #334155;
+            border-top: 4px solid #38bdf8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success-checkmark {
+            transform: scale(0);
+            opacity: 0;
+            animation: pop-in 0.5s 0.2s forwards ease-out;
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ===== Animação de Scroll ===== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-brand-soft text-brand-dark">
+<body class="antialiased">
 
-    <!-- Header -->
-    <header class="sticky top-0 bg-brand-soft/80 backdrop-blur-lg z-50 border-b border-brand-base">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-brand-dark">jinoca.</a>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#services" class="hover:text-brand-accent transition-colors">Serviços</a>
-                <a href="#why-us" class="hover:text-brand-accent transition-colors">Diferenciais</a>
-                <a href="#automation" class="hover:text-brand-accent transition-colors">Automações</a>
-                <a href="#projects" class="hover:text-brand-accent transition-colors">Projetos</a>
-                <a href="#process" class="hover:text-brand-accent transition-colors">Processo</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden ml-auto">
-                <span class="material-icons-outlined text-3xl">menu</span>
-            </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-             <a href="#services" class="block py-2 hover:text-brand-accent transition-colors">Serviços</a>
-             <a href="#why-us" class="block py-2 hover:text-brand-accent transition-colors">Diferenciais</a>
-             <a href="#automation" class="block py-2 hover:text-brand-accent transition-colors">Automações</a>
-             <a href="#projects" class="block py-2 hover:text-brand-accent transition-colors">Projetos</a>
-             <a href="#process" class="block py-2 hover:text-brand-accent transition-colors">Processo</a>
-             <a href="https://wa.me/863018405" target="_blank" class="mt-4 btn-primary w-full text-center px-5 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
-                <span>Entrar em Contato</span>
-             </a>
+    <!-- ===== Header ===== -->
+    <header class="hero-bg text-white py-4 px-6 md:px-10 flex justify-between items-center sticky top-0 z-50 bg-opacity-90 backdrop-blur-sm border-b border-slate-800">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-sky-400 text-3xl">layers</span>
+            <span class="text-xl font-bold tracking-tight">SolutionCorp</span>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6">
-
-        <!-- Hero Section -->
-        <section id="hero" class="text-center py-20 md:py-32">
-            <h2 class="text-4xl md:text-6xl font-extrabold text-brand-dark leading-tight">
-                Construímos sua Máquina<br>de <span class="text-brand-accent">Crescimento Inteligente</span>.
-            </h2>
-            <p class="mt-6 max-w-3xl mx-auto text-lg text-brand-dark/80">
-                Chega de processos manuais, leads desqualificados e crescimento imprevisível. Unimos estratégia, dados e tecnologia para criar sistemas que geram oportunidades de negócio B2B de forma consistente e automática.
-            </p>
-            <a href="https://wa.me/863018405" target="_blank" class="mt-10 inline-flex items-center space-x-3 btn-primary px-8 py-4 rounded-lg font-bold text-lg">
-                <span>Agendar Diagnóstico Gratuito</span>
-                <span class="material-icons-outlined">whatsapp</span>
-            </a>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="py-16 md:py-24 border-t border-brand-base">
-            <div class="text-center mb-16">
-                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">NOSSAS SOLUÇÕES</h3>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">Uma abordagem completa para aquisição de clientes</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Service Card 1 -->
-                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
-                    <span class="material-icons-outlined text-4xl text-brand-accent">filter_alt</span>
-                    <h4 class="text-xl font-bold mt-4 mb-2">Estruturação de Funil</h4>
-                    <p class="text-brand-dark/80">Mapeamos e construímos a jornada ideal do seu cliente, desde o primeiro contato até o fechamento. Criamos funis de marketing e vendas que guiam o lead de forma lógica, aumentando drasticamente as taxas de conversão.</p>
-                </div>
-                <!-- Service Card 2 -->
-                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
-                    <span class="material-icons-outlined text-4xl text-brand-accent">groups</span>
-                    <h4 class="text-xl font-bold mt-4 mb-2">Geração de Leads B2B</h4>
-                    <p class="text-brand-dark/80">Vamos além do óbvio. Usamos prospecção ativa, enriquecimento de dados e qualificação precisa para encontrar e engajar decisores em suas contas-alvo, entregando oportunidades reais para sua equipe de vendas.</p>
-                </div>
-                <!-- Service Card 3 -->
-                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
-                    <span class="material-icons-outlined text-4xl text-brand-accent">web</span>
-                    <h4 class="text-xl font-bold mt-4 mb-2">Landing Pages & Web Apps</h4>
-                    <p class="text-brand-dark/80">Desenvolvemos páginas focadas em uma única ação: a conversão. Além disso, criamos pequenos Web Apps (calculadoras, diagnósticos) que servem como iscas de leads de altíssimo valor para o seu negócio.</p>
-                </div>
-                <!-- Service Card 4 -->
-                <div class="bg-white p-8 rounded-2xl border border-brand-base subtle-shadow transition-transform hover:-translate-y-2">
-                    <span class="material-icons-outlined text-4xl text-brand-accent">bolt</span>
-                    <h4 class="text-xl font-bold mt-4 mb-2">Automações Inteligentes</h4>
-                    <p class="text-brand-dark/80">Identificamos tarefas repetitivas em seus processos de marketing e vendas e as automatizamos. Da nutrição de leads à atualização do CRM, liberamos seu tempo para o que realmente importa: estratégia e relacionamento.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Why Us Section -->
-        <section id="why-us" class="py-16 md:py-24">
-            <div class="text-center mb-16">
-                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">NOSSOS DIFERENCIAIS</h3>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">Por que somos a escolha certa para o seu negócio?</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="flex items-start space-x-6">
-                    <span class="material-icons-outlined section-icon mt-1">insights</span>
-                    <div>
-                        <h4 class="text-xl font-bold mb-2">Foco Obsessivo em ROI</h4>
-                        <p class="text-brand-dark/80">Não estamos aqui para entregar tarefas, estamos aqui para gerar retorno sobre o investimento. Cada ação, ferramenta e estratégia é planejada com um objetivo claro: impactar positivamente seu faturamento. Medimos tudo e otimizamos sem parar.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-6">
-                    <span class="material-icons-outlined section-icon mt-1">model_training</span>
-                    <div>
-                        <h4 class="text-xl font-bold mb-2">Visão Holística de Crescimento</h4>
-                        <p class="text-brand-dark/80">Entendemos que marketing e vendas não são ilhas. Nossa abordagem integra as duas áreas, garantindo que os leads gerados pelo marketing sejam de alta qualidade e que a equipe de vendas tenha o contexto e as ferramentas para convertê-los eficientemente.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-6">
-                    <span class="material-icons-outlined section-icon mt-1">hub</span>
-                    <div>
-                        <h4 class="text-xl font-bold mb-2">Expertise em Tecnologia e Processos</h4>
-                        <p class="text-brand-dark/80">Somos fluentes na linguagem das ferramentas que impulsionam o crescimento (CRMs, automação de marketing, plataformas de prospecção). Não apenas recomendamos, mas implementamos, integramos e garantimos que a tecnologia trabalhe a seu favor.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-6">
-                    <span class="material-icons-outlined section-icon mt-1">handshake</span>
-                    <div>
-                        <h4 class="text-xl font-bold mb-2">Parceria, Não Apenas Prestação</h4>
-                        <p class="text-brand-dark/80">Atuamos como uma extensão da sua equipe. Nos envolvemos profundamente para entender as nuances do seu mercado e seus clientes. Sua meta se torna a nossa meta, e trabalhamos com transparência e comunicação constante para alcançá-la.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- What is Automation Section -->
-        <section id="automation" class="py-16 md:py-24 bg-brand-base -mx-6 px-6">
-            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-4">
-                    <span class="material-icons-outlined text-5xl text-brand-accent">auto_awesome</span>
-                    <h2 class="text-3xl md:text-4xl font-bold">O que são Automações, na prática?</h2>
-                    <p class="text-brand-dark/80 leading-relaxed">
-                        Imagine ter um funcionário incansável, que trabalha 24/7, nunca comete erros e executa tarefas operacionais com perfeição. Isso é a automação. É o uso da tecnologia para realizar ações pré-definidas com base em gatilhos e regras, sem intervenção humana.
+    <!-- ===== Main Content ===== -->
+    <main>
+        <!-- ===== Hero Section ===== -->
+        <section id="hero" class="hero-bg text-white">
+            <div class="container mx-auto px-6 py-12 md:py-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Coluna de Texto -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+                        A plataforma de gestão que <span class="text-sky-400">transforma</span> a sua operação.
+                    </h1>
+                    <p class="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0">
+                        Centralize tarefas, automatize processos e entregue resultados com mais eficiência. Veja como a nossa solução pode impulsionar a sua equipa.
                     </p>
-                    <p class="text-brand-dark/80 leading-relaxed">
-                        O objetivo não é substituir pessoas, mas sim libertá-las de tarefas repetitivas e de baixo valor, permitindo que foquem em estratégia, criatividade e relacionamento com o cliente.
-                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 pt-4">
+                        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-green-400">check_circle</span><span>Sem cartão de crédito</span></div>
+                        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-green-400">check_circle</span><span>Teste gratuito</span></div>
+                    </div>
                 </div>
-                <div class="bg-white p-8 rounded-xl subtle-shadow border border-brand-base">
-                    <h4 class="font-bold text-lg mb-4">Exemplos de automações que implementamos:</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">mark_email_read</span><span><strong>Nutrição de Leads:</strong> Envio de sequências de e-mails educativos para novos leads, aquecendo-os para a compra.</span></li>
-                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">grade</span><span><strong>Lead Scoring:</strong> Pontuar leads com base em seu perfil e ações (visitou a página de preço, baixou um material) para identificar os mais quentes.</span></li>
-                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">move_up</span><span><strong>Atualização de CRM:</strong> Mover um lead de etapa no funil de vendas automaticamente quando ele realiza uma ação específica.</span></li>
-                        <li class="flex items-start"><span class="material-icons-outlined text-brand-accent mr-3">task_alt</span><span><strong>Qualificação de Leads:</strong> Enviar uma notificação para o vendedor apenas quando o lead atinge uma pontuação mínima ou solicita contato.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="py-16 md:py-24">
-            <div class="text-center mb-16">
-                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">ESTUDOS DE CASO</h3>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">Nossa abordagem na prática</h2>
-            </div>
-            <div class="space-y-20">
-                <!-- Project 1 -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-4">
-                        <h4 class="text-2xl font-bold">Nexus Tech - Estrutura de Prospecção B2B</h4>
-                        <p class="text-brand-dark/80"><strong>Desafio:</strong> A Nexus Tech, uma empresa de software, dependia de indicações e tinha um processo de prospecção manual, lento e de baixo volume.</p>
-                        <p class="text-brand-dark/80"><strong>Solução:</strong> Implementamos um sistema de prospecção outbound semi-automatizado. Utilizamos o Apollo.io para construir listas de decisores em empresas-alvo e o Instantly para disparar sequências de e-mails personalizadas. Os vendedores eram acionados apenas quando um lead demonstrava interesse.</p>
-                        <div class="flex flex-wrap gap-3 pt-2">
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Apollo.io</span>
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Instantly.ai</span>
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Prospecção B2B</span>
+                <!-- Coluna do Formulário -->
+                <div id="form-cta" class="bg-slate-900/50 border border-slate-700 p-6 sm:p-8 rounded-2xl shadow-2xl shadow-slate-950/50 w-full max-w-lg mx-auto lg:max-w-none">
+                    <form id="lead-form" class="form-container">
+                        <!-- ETAPA 1: Boas-vindas -->
+                        <div class="form-step active text-center" data-step="1">
+                            <h2 class="text-2xl font-bold mb-1">Peça a sua demonstração</h2>
+                            <p class="text-slate-400 mb-8">É rápido, vamos guiá-lo em alguns passos.</p>
+                            <button type="button" data-action="next-step" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-4 rounded-lg cta-button text-lg">
+                                Começar Agora
+                            </button>
                         </div>
-                    </div>
-                    <div>
-                        <img src="https://placehold.co/600x400/EFEAE4/59443B?text=Dashboard+de+Prospec%C3%A7%C3%A3o" alt="Dashboard de Prospecção" class="rounded-xl subtle-shadow w-full h-auto object-cover">
-                    </div>
-                </div>
-                <!-- Project 2 -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="order-2 lg:order-1">
-                         <img src="https://placehold.co/600x400/EFEAE4/59443B?text=Fluxo+de+Automa%C3%A7%C3%A3o" alt="Fluxo de Automação de Marketing" class="rounded-xl subtle-shadow w-full h-auto object-cover">
-                    </div>
-                    <div class="space-y-4 order-1 lg:order-2">
-                        <h4 class="text-2xl font-bold">Inova Hub - Automação da Jornada do Cliente</h4>
-                        <p class="text-brand-dark/80"><strong>Desafio:</strong> A consultoria Inova Hub gerava muitos leads através de webinars, mas perdia a maioria por falta de um acompanhamento (follow-up) estruturado.</p>
-                        <p class="text-brand-dark/80"><strong>Solução:</strong> Desenhamos e implementamos uma jornada de nutrição completa no RD Station. Após o webinar, os leads entravam em um fluxo automático que entregava conteúdos complementares, os qualificava com lead scoring e os direcionava para a equipe de vendas no momento certo.</p>
-                        <div class="flex flex-wrap gap-3 pt-2">
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">RD Station</span>
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Automação de Marketing</span>
-                            <span class="bg-brand-base text-brand-dark text-sm font-medium px-3 py-1 rounded-full">Nutrição de Leads</span>
+
+                        <!-- ETAPA 2: Dados da Empresa -->
+                        <div class="form-step" data-step="2">
+                             <h3 class="text-xl font-bold text-center mb-6">Primeiro, sobre a sua empresa</h3>
+                             <div class="space-y-5">
+                                <div>
+                                    <label for="company-name" class="block text-sm font-medium text-slate-300 mb-1">Nome da empresa</label>
+                                    <input type="text" id="company-name" name="company-name" required class="w-full form-input p-3 rounded-lg text-white" placeholder="Sua empresa LTDA">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-1">Número de funcionários</label>
+                                    <div class="custom-select-wrapper">
+                                        <select id="employees" name="employees" required class="hidden">
+                                            <option value=""></option>
+                                            <option value="1-10">1-10</option>
+                                            <option value="11-50">11-50</option>
+                                            <option value="51-200">51-200</option>
+                                            <option value="201-1000">201-1000</option>
+                                            <option value="1000+">1000+</option>
+                                        </select>
+                                        <div class="custom-select form-input p-3 rounded-lg text-white">
+                                            <div class="custom-select-trigger">
+                                                <span class="selected-value text-slate-400">Selecione uma opção</span>
+                                                <span class="material-symbols-outlined arrow">expand_more</span>
+                                            </div>
+                                            <div class="custom-options">
+                                                <div class="custom-option" data-value="1-10">1-10</div>
+                                                <div class="custom-option" data-value="11-50">11-50</div>
+                                                <div class="custom-option" data-value="51-200">51-200</div>
+                                                <div class="custom-option" data-value="201-1000">201-1000</div>
+                                                <div class="custom-option" data-value="1000+">1000+</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- ETAPA 3: Dados Pessoais -->
+                        <div class="form-step" data-step="3">
+                             <h3 class="text-xl font-bold text-center mb-6">Agora, sobre si</h3>
+                             <div class="space-y-5">
+                                <div>
+                                    <label for="person-name" class="block text-sm font-medium text-slate-300 mb-1">Seu nome</label>
+                                    <input type="text" id="person-name" name="person-name" required class="w-full form-input p-3 rounded-lg text-white" placeholder="Ex: João Silva">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-slate-300 mb-1">E-mail corporativo</label>
+                                    <input type="email" id="email" name="email" required class="w-full form-input p-3 rounded-lg text-white" placeholder="joao.silva@suaempresa.com">
+                                </div>
+                                 <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-1">Principal interesse</label>
+                                    <div class="custom-select-wrapper">
+                                        <select id="interest" name="interest" required class="hidden">
+                                            <option value=""></option>
+                                            <option value="gestao-projetos">Gestão de Projetos</option>
+                                            <option value="automacao">Automação de Tarefas</option>
+                                            <option value="crm">CRM de Vendas</option>
+                                            <option value="outros">Outros</option>
+                                        </select>
+                                        <div class="custom-select form-input p-3 rounded-lg text-white">
+                                            <div class="custom-select-trigger">
+                                                <span class="selected-value text-slate-400">Selecione uma opção</span>
+                                                <span class="material-symbols-outlined arrow">expand_more</span>
+                                            </div>
+                                            <div class="custom-options">
+                                                <div class="custom-option" data-value="gestao-projetos">Gestão de Projetos</div>
+                                                <div class="custom-option" data-value="automacao">Automação de Tarefas</div>
+                                                <div class="custom-option" data-value="crm">CRM de Vendas</div>
+                                                <div class="custom-option" data-value="outros">Outros</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ETAPA DE PROCESSAMENTO -->
+                        <div class="form-step items-center text-center" data-step="processing">
+                            <div class="loader mb-6"></div>
+                            <p class="text-slate-400">A enviar as suas informações...</p>
+                        </div>
+
+                        <!-- ETAPA DE SUCESSO -->
+                        <div class="form-step items-center text-center" data-step="success">
+                            <div class="success-checkmark w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined text-5xl text-white">check</span>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-2">Solicitação enviada!</h2>
+                            <p class="text-slate-400 max-w-xs">A nossa equipa entrará em contacto em breve para agendar a sua demonstração.</p>
+                        </div>
+
+                        <!-- Controles de Navegação (fora das etapas) -->
+                        <div id="form-navigation" class="absolute bottom-0 left-0 w-full flex justify-between items-center pt-6 opacity-0 invisible transition-opacity duration-300">
+                           <button type="button" data-action="prev-step" class="text-slate-400 hover:text-white font-semibold py-2 px-4 rounded-lg cta-button">
+                               Voltar
+                           </button>
+                           <button type="button" data-action="next-step" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-8 rounded-lg cta-button">
+                               Avançar
+                           </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Vantagens Section ===== -->
+        <section id="vantagens" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold scroll-reveal">Recursos projetados para o seu sucesso</h2>
+                    <p class="mt-4 text-lg text-slate-600 scroll-reveal">A nossa plataforma oferece as ferramentas que precisa para escalar a sua operação com segurança e eficiência.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-8 border border-slate-200 rounded-xl scroll-reveal">
+                        <div class="bg-sky-100 text-sky-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-5"><span class="material-symbols-outlined text-3xl">bolt</span></div>
+                        <h3 class="text-xl font-bold mb-2">Automação Inteligente</h3>
+                        <p class="text-slate-600">Elimine tarefas manuais e repetitivas. Configure fluxos de trabalho que economizam tempo e reduzem erros.</p>
+                    </div>
+                    <div class="p-8 border border-slate-200 rounded-xl scroll-reveal">
+                        <div class="bg-sky-100 text-sky-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-5"><span class="material-symbols-outlined text-3xl">groups</span></div>
+                        <h3 class="text-xl font-bold mb-2">Colaboração em Tempo Real</h3>
+                        <p class="text-slate-600">Mantenha a sua equipa sincronizada com comunicação centralizada, quadros de tarefas e partilha de ficheiros.</p>
+                    </div>
+                    <div class="p-8 border border-slate-200 rounded-xl scroll-reveal">
+                        <div class="bg-sky-100 text-sky-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-5"><span class="material-symbols-outlined text-3xl">monitoring</span></div>
+                        <h3 class="text-xl font-bold mb-2">Relatórios Detalhados</h3>
+                        <p class="text-slate-600">Tome decisões baseadas em dados com dashboards personalizáveis que monitorizam os KPIs mais importantes.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Process Section -->
-        <section id="process" class="py-16 md:py-24">
-             <div class="text-center mb-16">
-                <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">COMO TRABALHAMOS</h3>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">Nossa metodologia para construir seu sucesso</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <!-- Step 1 -->
-                <div class="bg-white p-8 rounded-xl border border-brand-base">
-                    <span class="material-icons-outlined section-icon mb-4">biotech</span>
-                    <h3 class="text-xl font-bold mb-2">1. Diagnóstico e Estratégia</h3>
-                    <p class="text-brand-dark/80">Realizamos uma imersão profunda no seu negócio, analisando processos, concorrência e o perfil do seu cliente ideal. O resultado é um plano de ação detalhado, com KPIs claros e um mapa da jornada do cliente a ser construída.</p>
+        <!-- ===== Como Funciona Section ===== -->
+        <section id="como-funciona" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold scroll-reveal">Comece a usar em 3 passos simples</h2>
+                    <p class="mt-4 text-lg text-slate-600 scroll-reveal">O nosso processo de implementação é rápido e focado em gerar valor desde o primeiro dia.</p>
                 </div>
-                 <!-- Step 2 -->
-                <div class="bg-white p-8 rounded-xl border border-brand-base">
-                    <span class="material-icons-outlined section-icon mb-4">construction</span>
-                    <h3 class="text-xl font-bold mb-2">2. Implementação e Tecnologia</h3>
-                    <p class="text-brand-dark/80">É hora de construir. Configuramos as ferramentas, criamos os ativos (e-mails, landing pages), desenvolvemos os fluxos de automação e integramos os sistemas para que tudo funcione de forma coesa e eficiente, com testes rigorosos.</p>
-                </div>
-                 <!-- Step 3 -->
-                <div class="bg-white p-8 rounded-xl border border-brand-base">
-                    <span class="material-icons-outlined section-icon mb-4">trending_up</span>
-                    <h3 class="text-xl font-bold mb-2">3. Otimização Contínua</h3>
-                    <p class="text-brand-dark/80">Nosso trabalho não termina no lançamento. Monitoramos os dados constantemente, geramos relatórios de performance e propomos otimizações (testes A/B, ajustes de fluxo) para garantir que sua máquina de crescimento esteja sempre melhorando.</p>
+                <div class="grid md:grid-cols-3 gap-12 md:gap-4 relative">
+                    <div class="hidden md:block absolute top-8 -translate-y-1/2 left-0 w-full h-px bg-slate-300" style="z-index: -1;"></div>
+                    <div class="text-center scroll-reveal">
+                        <div class="relative inline-block bg-gray-50 z-10"><div class="w-16 h-16 bg-white border-2 border-slate-300 text-slate-700 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">1</div></div>
+                        <h3 class="text-xl font-semibold mb-2">Diagnóstico e Planeamento</h3>
+                        <p class="text-slate-600 px-4">Analisamos os seus desafios e desenhamos um plano de implementação à medida da sua empresa.</p>
+                    </div>
+                    <div class="text-center scroll-reveal">
+                         <div class="relative inline-block bg-gray-50 z-10"><div class="w-16 h-16 bg-white border-2 border-slate-300 text-slate-700 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">2</div></div>
+                        <h3 class="text-xl font-semibold mb-2">Configuração e Formação</h3>
+                        <p class="text-slate-600 px-4">Configuramos a plataforma e formamos a sua equipa para garantir uma adoção rápida e o máximo de aproveitamento.</p>
+                    </div>
+                    <div class="text-center scroll-reveal">
+                         <div class="relative inline-block bg-gray-50 z-10"><div class="w-16 h-16 bg-white border-2 border-slate-300 text-slate-700 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">3</div></div>
+                        <h3 class="text-xl font-semibold mb-2">Suporte Contínuo</h3>
+                        <p class="text-slate-600 px-4">Tenha acesso a um gestor de sucesso dedicado para otimizar o uso da plataforma e garantir os seus resultados.</p>
+                    </div>
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-brand-dark text-white">
-        <div class="container mx-auto px-6 py-20 text-center">
-             <h2 class="text-3xl md:text-4xl font-bold">Pronto para parar de perder oportunidades?</h2>
-             <p class="mt-4 max-w-xl mx-auto text-white/80">Vamos conversar sobre os gargalos do seu processo comercial e desenhar um plano para automatizar seu crescimento. Sem compromisso.</p>
-             <a href="https://wa.me/863018405" target="_blank" class="mt-8 inline-flex items-center space-x-3 bg-white text-brand-dark px-8 py-4 rounded-lg font-bold text-lg transition-transform hover:scale-105">
-                <span>Fale com um especialista agora</span>
-                <span class="material-icons-outlined">whatsapp</span>
-            </a>
-            <div class="mt-16 border-t border-white/20 pt-8">
-                <p class="text-white/70">&copy; 2024 jinoca. Todos os direitos reservados.</p>
+    <!-- ===== Footer ===== -->
+    <footer class="bg-slate-900 text-slate-400">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <p class="text-sm">&copy; 2024 SolutionCorp. Todos os direitos reservados.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#" class="text-sm hover:text-white transition-colors">Política de Privacidade</a>
+                <a href="#" class="text-sm hover:text-white transition-colors">Termos de Uso</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Lógica para o menu mobile
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Lógica do Formulário Multi-Passo ---
+        const form = document.getElementById('lead-form');
+        const formNavigation = document.getElementById('form-navigation');
+        const steps = Array.from(form.querySelectorAll('.form-step'));
+        const nextButtons = form.querySelectorAll('[data-action="next-step"]');
+        const prevButton = form.querySelector('[data-action="prev-step"]');
         
-        // Fechar o menu ao clicar em um link
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                 mobileMenu.classList.add('hidden');
+        let currentStepIndex = 0;
+        const totalDataSteps = steps.filter(s => s.dataset.step.match(/^\d+$/) && s.dataset.step !== '1').length;
+
+        const goToStep = (stepIndex) => {
+            if (stepIndex < 0 || stepIndex >= steps.length) return;
+
+            const exitingStep = steps[currentStepIndex];
+            if (exitingStep) {
+                exitingStep.classList.add('exiting');
+                exitingStep.classList.remove('active');
+            }
+            
+            const targetStep = steps[stepIndex];
+            if (targetStep) {
+                targetStep.classList.remove('exiting');
+                targetStep.classList.add('active');
+            }
+            
+            currentStepIndex = stepIndex;
+            updateControls();
+        };
+
+        const updateControls = () => {
+            const currentStepData = steps[currentStepIndex].dataset.step;
+
+            if (currentStepData !== '1' && currentStepData !== 'processing' && currentStepData !== 'success') {
+                formNavigation.classList.remove('opacity-0', 'invisible');
+            } else {
+                formNavigation.classList.add('opacity-0', 'invisible');
+            }
+            
+            const nextBtn = formNavigation.querySelector('[data-action="next-step"]');
+            if (parseInt(currentStepData) === totalDataSteps + 1) { // Última etapa de dados
+                nextBtn.textContent = 'Solicitar Demonstração';
+            } else {
+                nextBtn.textContent = 'Avançar';
+            }
+        };
+
+        const validateCurrentStep = () => {
+            const currentStepEl = steps[currentStepIndex];
+            const inputs = currentStepEl.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                let elementToStyle = input;
+                if(input.tagName === 'SELECT'){
+                    elementToStyle = input.closest('.custom-select-wrapper').querySelector('.custom-select');
+                }
+                
+                elementToStyle.classList.remove('input-error');
+
+                if (!input.value.trim()) {
+                    isValid = false;
+                    elementToStyle.classList.add('input-error');
+                }
+            });
+            return isValid;
+        };
+        
+        nextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (validateCurrentStep()) {
+                    const currentStepData = steps[currentStepIndex].dataset.step;
+                    const isLastDataStep = parseInt(currentStepData) === totalDataSteps + 1;
+
+                    if(isLastDataStep){
+                         // Ação de submit
+                         goToStep(steps.findIndex(s => s.dataset.step === 'processing'));
+                         setTimeout(() => {
+                             const formData = new FormData(form);
+                             const data = Object.fromEntries(formData.entries());
+                             console.log('Dados do formulário enviados:', data);
+                             goToStep(steps.findIndex(s => s.dataset.step === 'success'));
+                         }, 2000);
+                    } else {
+                         goToStep(currentStepIndex + 1);
+                    }
+                }
             });
         });
+
+        prevButton.addEventListener('click', () => {
+            if (currentStepIndex > 1) { // Não pode voltar do passo 2
+                goToStep(currentStepIndex - 1);
+            }
+        });
+
+        // --- Lógica do Seletor Personalizado ---
+        document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+            const trigger = wrapper.querySelector('.custom-select-trigger');
+            const nativeSelect = wrapper.querySelector('select');
+            const options = wrapper.querySelectorAll('.custom-option');
+            const selectedValueEl = wrapper.querySelector('.selected-value');
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Fecha outros selects abertos
+                document.querySelectorAll('.custom-select-wrapper.open').forEach(openWrapper => {
+                    if(openWrapper !== wrapper) openWrapper.classList.remove('open');
+                });
+                wrapper.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    selectedValueEl.textContent = option.textContent;
+                    selectedValueEl.classList.remove('text-slate-400');
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    nativeSelect.value = option.dataset.value;
+                    nativeSelect.dispatchEvent(new Event('change'));
+                    wrapper.classList.remove('open');
+                });
+            });
+        });
+        // Fecha o select ao clicar em qualquer outro lugar
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select-wrapper.open').forEach(wrapper => wrapper.classList.remove('open'));
+        });
+        
+        // --- Animação de Scroll (para o restante da página) ---
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => observer.observe(el));
+    });
     </script>
 </body>
 </html>
+
 
