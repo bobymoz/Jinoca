@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Dados Confiável</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@8.4.1/dist/faker.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #28a745; /* Verde Sucesso */
+            --primary-hover: #218838;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --muted-text-color: #6c757d;
+            --border-radius: 10px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .card {
+            background: var(--card-background);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            transition: transform 0.3s ease;
+        }
+        h1 {
+            margin: 0 0 15px 0;
+            font-weight: 700;
+        }
+        p {
+            margin: 0 0 30px 0;
+            color: var(--muted-text-color);
+            line-height: 1.7;
+        }
+        .generate-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+        .generate-button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+        .generate-button:disabled {
+            background-color: #b0d8b9;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .status-area {
+            margin-top: 25px;
+            min-height: 50px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            display: none; /* Começa oculto */
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.1s linear;
+        }
+        .status-text {
+            color: var(--muted-text-color);
+            font-size: 14px;
+        }
+        .error-text {
+            color: #dc3545; /* Vermelho Erro */
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Gerador de Dados</h1>
+        <p>Clique no botão para gerar e baixar um arquivo CSV com <strong>500</strong> registros de dados fictícios para seus estudos.</p>
+        
+        <button class="generate-button" id="generateBtn">Gerar 500 Registros</button>
+        
+        <div class="status-area">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            <div class="status-text" id="statusText"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIGURAÇÕES ---
+            const QUANTITY = 500;
+            const CHUNK_SIZE = 25; // Processa em lotes de 25 para uma barra de progresso suave
+
+            // --- ELEMENTOS DA PÁGINA ---
+            const generateBtn = document.getElementById('generateBtn');
+            const statusText = document.getElementById('statusText');
+            const progressBar = document.getElementById('progressBar');
+            const progressBarFill = document.getElementById('progressBarFill');
+
+            // --- VERIFICAÇÃO INICIAL ---
+            if (typeof faker === 'undefined') {
+                generateBtn.disabled = true;
+                statusText.textContent = "Erro: A biblioteca Faker.js não pôde ser carregada. Verifique sua conexão ou desative bloqueadores de anúncio.";
+                statusText.classList.add('error-text');
+                return;
+            }
+            
+            // Configura o Faker para o Português do Brasil
+            faker.setLocale('pt_BR');
+
+            // --- FUNÇÕES AUXILIARES ---
+            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+            
+            function generateCpf() {
+                const n = Array.from({length: 9}, () => Math.floor(Math.random() * 10));
+                let d1 = n.map((v, i) => v * (10 - i)).reduce((acc, v) => acc + v, 0) % 11;
+                d1 = d1 < 2 ? 0 : 11 - d1;
+                n.push(d1);
+                let d2 = n.map((v, i) => v * (11 - i)).reduce((acc, v) => acc + v, 0) % 11;
+                d2 = d2 < 2 ? 0 : 11 - d2;
+                n.push(d2);
+                return `${n.slice(0,3).join('')}.${n.slice(3,6).join('')}.${n.slice(6,9).join('')}-${n.slice(9,11).join('')}`;
+            }
+
+            function downloadCsv(content, fileName) {
+                const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fileName);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+            
+            // --- LÓGICA PRINCIPAL ---
+            generateBtn.addEventListener('click', async () => {
+                try {
+                    // 1. Preparar a UI
+                    generateBtn.disabled = true;
+                    statusText.textContent = 'Iniciando geração...';
+                    statusText.classList.remove('error-text');
+                    progressBar.style.display = 'block';
+                    progressBarFill.style.width = '0%';
+                    
+                    const csvRows = [];
+                    const headers = ["CPF", "Nome Completo", "Sexo", "Email", "Celular", "CEP", "Endereço", "Data de Nascimento"];
+                    csvRows.push(headers.join(','));
+
+                    // 2. Gerar dados em lotes
+                    for (let i = 0; i < QUANTITY; i++) {
+                        const sexo = faker.helpers.arrayElement(['Masculino', 'Feminino']);
+                        const firstName = faker.person.firstName(sexo.toLowerCase());
+                        const lastName = faker.person.lastName();
+                        const fullName = `${firstName} ${lastName}`;
+                        const birthdate = faker.date.birthdate({ min: 18, max: 70, mode: 'age' }).toISOString().split('T')[0];
+
+                        const rowData = [
+                            generateCpf(),
+                            fullName,
+                            sexo,
+                            faker.internet.email({ firstName, lastName }).toLowerCase(),
+                            faker.phone.number(),
+                            faker.location.zipCode(),
+                            faker.location.streetAddress({ useFullAddress: true }).replace(/,/g, ''), // Remove vírgulas do endereço
+                            birthdate
+                        ];
+                        
+                        // Escapa aspas e envolve cada campo com aspas
+                        csvRows.push(rowData.map(field => `"${String(field).replace(/"/g, '""')}"`).join(','));
+
+                        // 3. Atualizar a UI a cada lote
+                        if ((i + 1) % CHUNK_SIZE === 0 || i + 1 === QUANTITY) {
+                            const percentage = ((i + 1) / QUANTITY) * 100;
+                            progressBarFill.style.width = `${percentage}%`;
+                            statusText.textContent = `Gerando ${i + 1} de ${QUANTITY} registros...`;
+                            await sleep(10); // Pequena pausa para a UI renderizar
+                        }
+                    }
+
+                    // 4. Finalizar e fazer o download
+                    statusText.textContent = 'Preparando arquivo para download...';
+                    const csvContent = csvRows.join('\n');
+                    downloadCsv(csvContent, 'dados_ficticios_500.csv');
+                    
+                    statusText.textContent = `Download de ${QUANTITY} registros concluído!`;
+
+                } catch (error) {
+                    console.error("Ocorreu um erro:", error);
+                    statusText.textContent = "Houve um erro inesperado durante a geração.";
+                    statusText.classList.add('error-text');
+                } finally {
+                    // 5. Resetar a UI
+                    generateBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
